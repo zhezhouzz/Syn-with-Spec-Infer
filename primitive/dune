@@ -1,0 +1,16 @@
+(copy_files# libimp/*.ml{,i})
+(library
+ (name primitive)
+ (wrapped false)
+ (libraries utils qcheck typing core)
+ (modules
+   value
+   value_aux
+   ; method_predicate
+   ; randomgen
+   ; measure
+   bihashtab
+   inpmap
+ )
+ (preprocess (pps ppx_optcomp ppx_compare ppx_sexp_conv))
+)

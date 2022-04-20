@@ -1,0 +1,15 @@
+(library
+ (name lib)
+ (modules_without_implementation imp)
+ (libraries utils typing core primitive)
+ (modules
+   imp
+   imp_helper
+   imp_int
+   imp_nat
+   imp_list
+   imp_tree
+   imps
+ )
+ (preprocess (pps ppx_optcomp ppx_compare ppx_sexp_conv))
+)
