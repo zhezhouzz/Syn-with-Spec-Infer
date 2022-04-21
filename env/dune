@@ -1,0 +1,8 @@
+(library
+ (name env)
+ (wrapped false)
+ (modules
+   env
+ )
+ (libraries core yojson z3 utils primitive)
+)

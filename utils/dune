@@ -1,12 +1,10 @@
 (library
  (name utils)
  (wrapped false)
- (modules_without_implementation config)
  (modules
  zlog
  sugar
- config
- load_config
+ qcconfig
  renaming
  json
  )

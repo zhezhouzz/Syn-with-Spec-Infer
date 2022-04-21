@@ -6,8 +6,8 @@
  (modules
    value
    value_aux
-   ; method_predicate
-   ; randomgen
+   method_predicate
+   randomgen
    ; measure
    bihashtab
    inpmap

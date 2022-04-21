@@ -1,5 +1,7 @@
 let spf = Printf.sprintf
 
+let make_dir name = Core.Unix.mkdir_p name
+
 let rec fastexpt : int -> int -> int =
  fun b n ->
   if n = 0 then 1

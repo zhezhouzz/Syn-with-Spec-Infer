@@ -1,28 +1,11 @@
-open Basic_dt
+open Datatype
+module T = Type
 module V = Value
-module T = Tp
+open Sugar
 
 let bool_gen = QCheck.Gen.oneofl [ true; false ]
 
 let int_gen (chooses : int list) = QCheck.Gen.oneofl chooses
-
-(* let instruction_gen (chooses : int list) = *)
-(*   let open Ifc_instruction in *)
-(*   QCheck.Gen.( *)
-(*     map2 *)
-(*       (fun x y -> *)
-(*         match x with *)
-(*         | 0 -> Nop *)
-(*         | 1 -> Push y *)
-(*         | 2 -> BCall y *)
-(*         | 3 -> BRet *)
-(*         | 4 -> Add *)
-(*         | 5 -> Load *)
-(*         | _ -> Store) *)
-(*       (int_bound 6) (oneofl chooses)) *)
-
-(* let instruction_list_gen (chooses : int list) (bound : int) = *)
-(*   QCheck.Gen.(list_size (int_bound bound) (instruction_gen chooses)) *)
 
 let list_gen (chooses : int list) (bound : int) =
   QCheck.Gen.(list_size (int_bound bound) (oneofl chooses))
@@ -153,29 +136,10 @@ let choose_gen chooses bound tp =
       QCheck.Gen.map
         (fun x -> V.I x)
         (int_gen @@ List.filter (fun x -> x >= 0) chooses)
-  | T.IntList -> QCheck.Gen.map (fun x -> V.L x) (list_gen chooses bound)
-  | T.IntTree -> QCheck.Gen.map (fun x -> V.T x) (tree_gen chooses bound)
-  | T.IntTreeI -> QCheck.Gen.map (fun x -> V.TI x) (treei_gen chooses bound)
-  | T.IntTreeB -> QCheck.Gen.map (fun x -> V.TB x) (treeb_gen chooses bound)
+  | T.(List Int) -> QCheck.Gen.map (fun x -> V.IL x) (list_gen chooses bound)
+  | T.(Tree Int) -> QCheck.Gen.map (fun x -> V.IT x) (tree_gen chooses bound)
   | T.Bool -> QCheck.Gen.map (fun x -> V.B x) bool_gen
-  (* | T.IfcInstr -> QCheck.Gen.map (fun x -> V.IInstr x) (instruction_gen chooses) *)
-  (* | T.IfcInstrList -> *)
-  (*     QCheck.Gen.map (fun x -> V.IInstrL x) (instruction_list_gen chooses bound) *)
-  | T.IntBoolList ->
-      QCheck.Gen.map (fun x -> V.IBL x) (iblist_gen chooses bound)
-  | T.BoolIntBoolList ->
-      QCheck.Gen.map (fun x -> V.BIBL x) (biblist_gen chooses bound)
-  | T.Uninterp "binomialhp" ->
-      QCheck.Gen.map (fun x -> V.Binomialhp x) (binomialhp_gen chooses bound)
-  | T.Uninterp "pairinghp" ->
-      QCheck.Gen.map (fun x -> V.Pairinghp x) (pairinghp_gen chooses bound)
-  | T.Uninterp "physicistsq" ->
-      QCheck.Gen.map (fun x -> V.Physicistsq x) (physicistsq_gen chooses bound)
-  | T.Uninterp "realtimeq" ->
-      QCheck.Gen.map (fun x -> V.Realtimeq x) (realtimeq_gen chooses bound)
-  | T.Uninterp "skewhp" ->
-      QCheck.Gen.map (fun x -> V.Skewhp x) (skewhp_gen chooses bound)
-  | T.Uninterp name -> raise @@ failwith (spf "no generator for type %s" name)
+  | _ -> failwith (spf "no generator for type %s" @@ T.layout tp)
 
 let gens ~chooses ~num ~tps ~bound =
   let gens = List.map (choose_gen chooses bound) tps in

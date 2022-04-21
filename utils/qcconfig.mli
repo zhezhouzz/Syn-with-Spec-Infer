@@ -1,12 +1,10 @@
-type debug_flag = Debug of { logc : Core.Out_channel.t } | Opt
-
 type size = SmallNat | SizeBound of int
 
 type element = SmallUnsign | LowUpper of int * int
 
 type tree_fq = { fq_leaf : int; fq_node : int }
 
-type quick_check_config = {
+type t = {
   int_conf : element;
   list_conf : element * size;
   tree_conf : element * size * tree_fq;
@@ -19,8 +17,6 @@ type quick_check_config = {
   skewhp_conf : element * size;
 }
 
-type config = {
-  debug_flag : debug_flag;
-  z3_ctx : Z3.context option;
-  qc: quick_check_config option;
-}
+val qcconf : t option ref
+
+val load_qc_config : string -> unit

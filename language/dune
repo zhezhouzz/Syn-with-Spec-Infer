@@ -1,0 +1,12 @@
+(library
+ (name language)
+ (wrapped false)
+ (libraries utils core datatype primitive)
+ (modules_without_implementation fol tlang)
+ (modules
+   prop
+   fol
+   tlang
+ )
+ (preprocess (pps ppx_optcomp ppx_compare ppx_sexp_conv))
+)
