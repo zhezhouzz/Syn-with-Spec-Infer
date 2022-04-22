@@ -3,8 +3,6 @@
  (wrapped false)
  (libraries utils qcheck core language parsing)
  (modules
-   ; value_aux
-   ; type_aux
    method_predicate
    randomgen
    ; measure
