@@ -1,0 +1,9 @@
+(library
+ (name ast)
+ (wrapped false)
+ (libraries datatype)
+ (modules
+   ast
+ )
+ (preprocess (pps ppx_optcomp ppx_compare ppx_sexp_conv))
+)

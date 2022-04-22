@@ -1,9 +1,11 @@
 (library
  (name language)
  (wrapped false)
- (libraries utils core datatype primitive)
+ (libraries utils core datatype ast parsing)
  (modules_without_implementation fol tlang)
  (modules
+   type
+   value
    prop
    fol
    tlang

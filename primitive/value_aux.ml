@@ -1,18 +1,20 @@
-module V = Value
 open Datatype
+open Sexplib.Std
+open Sugar
+open Value
 
 module ValueVector = struct
-  type t = V.t list
+  type t = Value.t list
 
-  let compare = List.compare V.compare
+  let compare = List.compare compare
 end
 
 module ValueVectorMap = Map.Make (ValueVector)
 
 module ValueSet = Set.Make (struct
-  let compare = V.compare
+  let compare = compare
 
-  type t = V.t
+  type t = Value.t
 end)
 
 let remove_duplicates l =
@@ -20,9 +22,9 @@ let remove_duplicates l =
   List.of_seq @@ ValueSet.to_seq s
 
 module ValueLSet = Set.Make (struct
-  let compare = List.compare V.compare
+  let compare = List.compare compare
 
-  type t = V.t list
+  type t = Value.t list
 end)
 
 let remove_duplicates_l l =
@@ -60,9 +62,9 @@ let intersection l1 l2 =
 
 module ValueArrSet = Set.Make (struct
   let compare (arr1, idx1) (arr2, idx2) =
-    List.compare V.compare arr1.(idx1) arr2.(idx2)
+    List.compare compare arr1.(idx1) arr2.(idx2)
 
-  type t = V.t list array * int
+  type t = Value.t list array * int
 end)
 
 let remove_duplicates_arr arr l =

@@ -4,6 +4,8 @@ type t =
   | Bool
   | Int
   | Nat
+  (* function type *)
+  | Arr of t * t
   (* reference *)
   | Ref of t
   (* datatypes *)

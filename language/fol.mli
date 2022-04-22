@@ -1,8 +1,8 @@
-type uf = Typedvar.t list * Prop.t
+type uf = Type.tvar list * Prop.t
 
 type spec = {
   name : string;
-  args : Typedvar.t list;
-  qv : Typedvar.t list;
+  args : Type.tvar list;
+  qv : Type.tvar list;
   body : Prop.t;
 }

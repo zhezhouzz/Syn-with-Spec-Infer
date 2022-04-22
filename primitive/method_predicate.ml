@@ -17,7 +17,7 @@ let name_of_poly_name_and_tps name tps =
   let aux = function
     | "mem", [ List Int; Int ] -> "il_mem"
     | poly_name, tps ->
-        failwith @@ spf "un-imp: %s(%s)" poly_name @@ layout_l tps
+        failwith @@ spf "un-imp: %s(%s)" poly_name @@ T.layout_l tps
   in
   aux (name, tps)
 

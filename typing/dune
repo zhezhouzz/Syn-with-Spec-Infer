@@ -1,10 +1,10 @@
-(library
- (name typing)
- (wrapped false)
- (libraries utils core datatype)
- (modules
-   type
-   typedvar
- )
- (preprocess (pps ppx_optcomp ppx_compare ppx_sexp_conv))
-)
+; (library
+;  (name typing)
+;  (wrapped false)
+;  (libraries utils core datatype)
+;  (modules
+;    type
+;    typedvar
+;  )
+;  (preprocess (pps ppx_optcomp ppx_compare ppx_sexp_conv))
+; )

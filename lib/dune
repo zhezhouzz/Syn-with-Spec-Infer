@@ -1,7 +1,7 @@
 (library
  (name lib)
  (modules_without_implementation imp)
- (libraries utils typing core primitive)
+ (libraries utils language core primitive)
  (modules
    imp
    imp_helper

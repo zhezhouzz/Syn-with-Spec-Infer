@@ -1,12 +1,12 @@
 type t =
   | Const of Value.t
   | Loc of int
-  | Fun of (Typedvar.t list * t)
+  | Fun of (Type.tvar list * t)
   | Tu of t list
-  | Var of Typedvar.t
-  | App of (string * Typedvar.t list)
+  | Var of Type.tvar
+  | App of (string * Type.tvar list)
   | Ref of t
   | Ite of (t * t * t)
-  | Let of (Typedvar.t list * t * t)
+  | Let of (Type.tvar list * t * t)
   | Ret of t
 (* TODO: match *)
