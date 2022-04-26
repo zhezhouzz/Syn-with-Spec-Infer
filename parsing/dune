@@ -6,6 +6,10 @@
    type
    value
    prop
+   pat
+   expr
+   signature
+   structure
  )
  (preprocess (pps ppx_optcomp ppx_compare ppx_sexp_conv))
 )

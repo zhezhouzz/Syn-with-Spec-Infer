@@ -6,13 +6,15 @@ module type Type = sig
     | Int
     | Nat
     (* function type *)
-    | Arr of t * t
+    | Arrow of t * t
     (* reference *)
     | Ref of t
     (* datatypes *)
     | List of t
+    | Array of t
     | Tree of t
     | Tuple of t list
+    | Record of (string * t) list
     | Uninterp of string
   [@@deriving sexp]
 
@@ -29,13 +31,15 @@ module T : Type = struct
     | Int
     | Nat
     (* function type *)
-    | Arr of t * t
+    | Arrow of t * t
     (* reference *)
     | Ref of t
     (* datatypes *)
     | List of t
+    | Array of t
     | Tree of t
     | Tuple of t list
+    | Record of (string * t) list
     | Uninterp of string
   [@@deriving sexp]
 
@@ -125,35 +129,67 @@ module F : FOL = struct
 end
 
 module type Slang = sig
+  type varname = string list [@@deriving sexp]
+
   type t =
     | Const of V.t
     | Loc of int
-    | Fun of (T.tvar list * t)
+    | Fun of ((T.t * varname) list * t)
     | Tu of t list
-    | Var of T.tvar
-    | App of (string * T.tvar list)
+    | Var of (T.t option * varname)
+    | App of (varname * t list)
     | Ref of t
     | Ite of (t * t * t)
-    | Let of (T.tvar list * t * t)
+    | Let of ((T.t * varname) list * t * t)
     | Ret of t
-  (* TODO: match *)
+    | Match of varname list * (t * t) list
   [@@deriving sexp]
 end
 
 module S : Slang = struct
   open Sexplib.Std
 
+  type varname = string list [@@deriving sexp]
+
   type t =
     | Const of V.t
     | Loc of int
-    | Fun of (T.tvar list * t)
+    | Fun of ((T.t * varname) list * t)
     | Tu of t list
-    | Var of T.tvar
-    | App of (string * T.tvar list)
+    | Var of (T.t option * varname)
+    | App of (varname * t list)
     | Ref of t
     | Ite of (t * t * t)
-    | Let of (T.tvar list * t * t)
+    | Let of ((T.t * varname) list * t * t)
     | Ret of t
-  (* TODO: match *)
+    | Match of varname list * (t * t) list
   [@@deriving sexp]
+end
+
+module type Signat = sig
+  type t_map = (string, T.t) Hashtbl.t [@@deriving sexp]
+
+  type t = { type_decl_map : t_map; func_type_map : t_map } [@@deriving sexp]
+end
+
+module Si : Signat = struct
+  open Sexplib.Std
+
+  type t_map = (string, T.t) Hashtbl.t [@@deriving sexp]
+
+  type t = { type_decl_map : t_map; func_type_map : t_map } [@@deriving sexp]
+end
+
+module type Client = sig
+  type t = { name : string; args : T.tvar list; body : S.t } [@@deriving sexp]
+
+  type code = t list [@@deriving sexp]
+end
+
+module C : Client = struct
+  open Sexplib.Std
+
+  type t = { name : string; args : T.tvar list; body : S.t } [@@deriving sexp]
+
+  type code = t list [@@deriving sexp]
 end

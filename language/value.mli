@@ -1,4 +1,4 @@
-include Ast.Value
+include Ast.Value with type t = Ast.V.t
 
 val compare : t -> t -> int
 

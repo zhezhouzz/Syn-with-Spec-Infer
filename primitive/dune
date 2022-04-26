@@ -1,7 +1,7 @@
 (library
  (name primitive)
  (wrapped false)
- (libraries utils qcheck core language parsing)
+ (libraries utils qcheck core language)
  (modules
    method_predicate
    randomgen

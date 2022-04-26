@@ -1,4 +1,4 @@
-include Ast.Prop
+include Ast.Prop with type t = Ast.P.t
 
 val layout : t -> string
 
